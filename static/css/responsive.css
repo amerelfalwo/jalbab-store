@@ -1,0 +1,221 @@
+/* ============================================================
+   Responsive Polish — لمسات نهائية
+   تُحمّل بعد كل ملفات CSS الأخرى
+   ============================================================ */
+
+/* ---------- 1) منع تحديد النص على الأزرار والشرائح ---------- */
+.btn,
+.qty-btn,
+.filter-chip,
+.navbar-link,
+.social-link,
+.cart-remove-btn,
+.navbar-toggle,
+.navbar-cart {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- 2) تحسين Focus للأزرار والروابط ---------- */
+.btn:focus-visible,
+.navbar-link:focus-visible,
+.filter-chip:focus-visible,
+.qty-btn:focus-visible,
+.cart-remove-btn:focus-visible,
+.social-link:focus-visible,
+.navbar-toggle:focus-visible,
+.navbar-cart:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* ---------- 3) انتقالات ناعمة للصور ---------- */
+img {
+    transition: opacity var(--transition-base);
+}
+
+img[loading] {
+    opacity: 0.95;
+}
+
+/* ---------- 4) تحسين الـ Scrollbar (Webkit) ---------- */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--off-white);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--gray-border);
+    border-radius: 5px;
+    transition: background-color var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--gray-mid);
+}
+
+/* ---------- 5) تحديد النص ---------- */
+::selection {
+    background-color: var(--dark-green);
+    color: var(--white);
+}
+
+/* ---------- 6) منع التمرير الأفقي غير المقصود ---------- */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* ---------- 7) تحسين الخط على الشاشات الصغيرة ---------- */
+@media (max-width: 480px) {
+    body {
+        font-size: 15px;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .btn {
+        padding: 11px 22px;
+        font-size: 0.95rem;
+    }
+
+    .btn-large {
+        padding: 13px 28px;
+        font-size: 1rem;
+    }
+}
+
+/* ---------- 8) تحسينات للشاشات الكبيرة جدًا ---------- */
+@media (min-width: 1440px) {
+    :root {
+        --container-max: 1320px;
+    }
+}
+
+/* ---------- 9) شاشات Tablet ---------- */
+@media (max-width: 900px) and (min-width: 769px) {
+    .products-grid,
+    .related-products .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ---------- 10) تحسين الـ Sticky Elements على الجوال ---------- */
+@media (max-width: 768px) {
+    .filters-bar {
+        top: var(--navbar-height);
+        border-radius: 0;
+        margin: 0 -16px;
+        padding: 12px 16px;
+    }
+}
+
+/* ---------- 11) تجنب مشاكل aspect-ratio على المتصفحات القديمة ---------- */
+@supports not (aspect-ratio: 3 / 4) {
+    .product-card-image-wrap,
+    .product-detail-image-wrap {
+        height: 0;
+        padding-bottom: 133.33%; /* 4/3 */
+        position: relative;
+    }
+
+    .product-card-image,
+    .product-detail-image {
+        position: absolute;
+        inset: 0;
+    }
+}
+
+/* ---------- 12) دعم prefers-reduced-motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ---------- 13) وضع الطباعة ---------- */
+@media print {
+    .navbar,
+    .footer,
+    .filters-bar,
+    .btn,
+    .navbar-cart {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+}
+
+/* ---------- صفحة الخطأ (404 / 500) ---------- */
+.error-page {
+    min-height: calc(100vh - var(--navbar-height) - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background-color: var(--off-white);
+}
+
+.error-content {
+    text-align: center;
+    max-width: 560px;
+}
+
+.error-code {
+    font-size: clamp(5rem, 15vw, 9rem);
+    font-weight: 800;
+    color: var(--dark-green);
+    line-height: 1;
+    letter-spacing: -4px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--dark-green), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.error-title {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 12px;
+}
+
+.error-message {
+    color: var(--gray-mid);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 32px;
+}
+
+.error-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+    .error-actions {
+        flex-direction: column;
+    }
+    .error-actions .btn {
+        width: 100%;
+    }
+}

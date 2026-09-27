@@ -1,0 +1,60 @@
+{% load static %}
+<article class="product-card">
+
+    <a href="{{ product.get_absolute_url }}" class="product-card-link">
+        <!-- الصورة -->
+        <div class="product-card-image-wrap">
+            {% if product.image %}
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                    class="product-card-image"
+                    loading="lazy"
+                >
+            {% else %}
+                <img
+                    src="{% static 'images/placeholder.svg' %}"
+                    alt="{{ product.name }}"
+                    class="product-card-image"
+                    loading="lazy"
+                >
+            {% endif %}
+
+            <!-- Badge خصم -->
+            {% if product.is_discounted %}
+                <span class="product-badge product-badge-discount">
+                    خصم {{ product.discount_percentage }}%
+                </span>
+            {% endif %}
+
+            <!-- Badge جديد -->
+            {% if product.is_new %}
+                <span class="product-badge product-badge-new">جديد</span>
+            {% endif %}
+
+            <!-- شارة "غير متوفر" -->
+            {% if not product.is_in_stock %}
+                <div class="product-out-of-stock-overlay">
+                    <span>غير متوفر</span>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- المعلومات -->
+        <div class="product-card-body">
+            <h3 class="product-card-name">{{ product.name }}</h3>
+
+            {% if product.is_discounted and product.old_price %}
+                <div class="product-card-price">
+                    <span class="price-current">{{ product.price|floatformat:0 }} جنيه</span>
+                    <span class="price-old">{{ product.old_price|floatformat:0 }} جنيه</span>
+                </div>
+            {% else %}
+                <div class="product-card-price">
+                    <span class="price-current">{{ product.price|floatformat:0 }} جنيه</span>
+                </div>
+            {% endif %}
+        </div>
+    </a>
+
+</article>

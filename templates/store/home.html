@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}جلباب — أناقة إسلامية{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product_card.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ============================================
+     Hero Section
+     ============================================ -->
+<section class="hero">
+    {% if hero %}
+        <div class="hero-bg">
+            <img src="{{ hero.image.url }}" alt="{{ hero.title }}" class="hero-image">
+            <div class="hero-overlay"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">{{ hero.title }}</h1>
+            <p class="hero-subtitle">{{ hero.subtitle }}</p>
+            <a href="{{ hero.button_url }}" class="btn btn-gold hero-btn">
+                {{ hero.button_text }}
+            </a>
+        </div>
+    {% else %}
+        <!-- Hero افتراضي في حال عدم إضافة صورة من Admin -->
+        <div class="hero-bg hero-bg-default">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">جلباب</h1>
+            <p class="hero-subtitle">أناقة إسلامية بلمسة عصرية</p>
+            <a href="{% url 'store:product_list' %}" class="btn btn-gold hero-btn">
+                تسوق الآن
+            </a>
+        </div>
+    {% endif %}
+</section>
+
+<!-- ============================================
+     التصنيفات السريعة
+     ============================================ -->
+{% if categories %}
+<section class="categories-section">
+    <div class="container">
+        <h2 class="section-title text-center">تسوّقي حسب التصنيف</h2>
+        <p class="section-subtitle text-center">اختاري ما يناسبك من مجموعاتنا المميزة</p>
+
+        <div class="categories-grid">
+            {% for category in categories %}
+                <a href="{{ category.get_absolute_url }}" class="category-card">
+                    <span class="category-name">{{ category.name }}</span>
+                    <span class="category-arrow">←</span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================
+     أحدث المنتجات
+     ============================================ -->
+{% if latest_products %}
+<section class="products-section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">أحدث المنتجات</h2>
+                <p class="section-subtitle">وصل حديثًا إلى جلباب</p>
+            </div>
+            <a href="{% url 'store:product_list' %}" class="section-link">عرض الكل ←</a>
+        </div>
+
+        <div class="products-grid">
+            {% for product in latest_products %}
+                {% include 'components/_product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================
+     المنتجات المخفّضة
+     ============================================ -->
+{% if discounted_products %}
+<section class="products-section products-section-alt">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">عروض وخصومات</h2>
+                <p class="section-subtitle">وفّري أكثر على منتجات مختارة</p>
+            </div>
+            <a href="{% url 'store:product_list' %}" class="section-link">عرض الكل ←</a>
+        </div>
+
+        <div class="products-grid">
+            {% for product in discounted_products %}
+                {% include 'components/_product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ============================================
+    في حال عدم وجود منتجات
+    ============================================ -->
+{% if not latest_products and not discounted_products %}
+<section class="empty-state">
+    <div class="container">
+        <h2>لا توجد منتجات حاليًا</h2>
+        <p>يمكنك إضافة منتجات من لوحة الإدارة.</p>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

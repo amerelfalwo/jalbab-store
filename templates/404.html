@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}الصفحة غير موجودة — جلباب{% endblock %}
+
+{% block content %}
+<section class="error-page">
+    <div class="container">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">الصفحة غير موجودة</h1>
+            <p class="error-message">
+                عذرًا، الصفحة التي تبحثين عنها غير متوفرة أو تم نقلها.
+            </p>
+            <div class="error-actions">
+                <a href="{% url 'store:home' %}" class="btn btn-primary">
+                    العودة إلى الرئيسية
+                </a>
+                <a href="{% url 'store:product_list' %}" class="btn btn-outline">
+                    تصفّحي المنتجات
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

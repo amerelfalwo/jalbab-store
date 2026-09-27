@@ -1,0 +1,62 @@
+{% load static %}
+<header class="navbar" id="navbar">
+    <div class="navbar-container">
+
+        <!-- الشعار -->
+        <a href="{% url 'store:home' %}" class="navbar-logo">
+            <span class="logo-text">جلباب</span>
+            <span class="logo-tagline">أناقة إسلامية</span>
+        </a>
+
+        <!-- زر القائمة للجوال -->
+        <button class="navbar-toggle" id="navbarToggle" aria-label="فتح القائمة" aria-expanded="false">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- القائمة الرئيسية -->
+        <nav class="navbar-menu" id="navbarMenu">
+            <ul class="navbar-list">
+
+                <li class="navbar-item">
+                    <a href="{% url 'store:home' %}" class="navbar-link">الرئيسية</a>
+                </li>
+
+                <!-- Dropdown المنتجات -->
+                <li class="navbar-item navbar-dropdown">
+                    <button class="navbar-link dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                        المنتجات
+                        <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'store:product_list' %}">جميع المنتجات</a></li>
+                        {% for category in nav_categories %}
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="{% url 'store:contact' %}" class="navbar-link">تواصل معنا</a>
+                </li>
+
+            </ul>
+
+            <!-- أيقونة السلة -->
+            <a href="{% url 'store:cart_detail' %}" class="navbar-cart" aria-label="السلة">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                {% if cart_count > 0 %}
+                    <span class="cart-badge">{{ cart_count }}</span>
+                {% endif %}
+            </a>
+        </nav>
+
+    </div>
+</header>

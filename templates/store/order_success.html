@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تم الطلب بنجاح — جلباب{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="order-success-section">
+    <div class="container">
+
+        <div class="order-success-card">
+
+            <div class="success-icon">
+                <svg width="72" height="72" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 12l3 3 5-6"></path>
+                </svg>
+            </div>
+
+            <h1 class="success-title">تم استلام طلبك بنجاح! 🎉</h1>
+            <p class="success-message">
+                شكرًا لك! سنتواصل معك قريبًا لتأكيد الطلب.
+            </p>
+
+            <div class="order-info-box">
+                <div class="order-info-row">
+                    <span class="order-info-label">رقم الطلب:</span>
+                    <strong class="order-info-value">{{ order.order_number }}</strong>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-info-label">الاسم:</span>
+                    <span class="order-info-value">{{ order.full_name }}</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-info-label">رقم الهاتف:</span>
+                    <span class="order-info-value">{{ order.phone }}</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-info-label">العنوان:</span>
+                    <span class="order-info-value">
+                        {{ order.governorate }} — {{ order.city }} — {{ order.address }}
+                    </span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-info-label">حالة الطلب:</span>
+                    <span class="order-status-badge">{{ order.get_status_display }}</span>
+                </div>
+                <div class="order-info-row order-info-total">
+                    <span class="order-info-label">الإجمالي:</span>
+                    <strong class="order-info-total-value">{{ order.total_price|floatformat:0 }} جنيه</strong>
+                </div>
+            </div>
+
+            <div class="order-items-preview">
+                <h2 class="order-items-title">المنتجات المطلوبة</h2>
+                <ul class="order-items-list">
+                    {% for item in order.items.all %}
+                    <li class="order-item-row">
+                        <span class="order-item-name">{{ item.product_name }}</span>
+                        <span class="order-item-qty">× {{ item.quantity }}</span>
+                        <span class="order-item-price">{{ item.subtotal|floatformat:0 }} جنيه</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="success-actions">
+                <a href="{% url 'store:product_list' %}" class="btn btn-primary">
+                    متابعة التسوق
+                </a>
+                <a href="{% url 'store:home' %}" class="btn btn-outline">
+                    الرئيسية
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

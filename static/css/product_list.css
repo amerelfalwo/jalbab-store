@@ -1,0 +1,272 @@
+/* ============================================================
+   Product List Page — صفحة المنتجات
+   ============================================================ */
+
+/* ---------- رأس الصفحة ---------- */
+.page-header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--gray-border);
+    padding: 40px 0 32px;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--gray-mid);
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.breadcrumb a {
+    color: var(--gray-mid);
+    transition: color var(--transition-fast);
+}
+
+.breadcrumb a:hover {
+    color: var(--dark-green);
+}
+
+.breadcrumb-sep {
+    color: var(--gray-mid);
+    opacity: 0.5;
+}
+
+.breadcrumb-current {
+    color: var(--dark-green);
+    font-weight: 600;
+}
+
+.page-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.page-description {
+    color: var(--gray-mid);
+    font-size: 1rem;
+    max-width: 640px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.page-count {
+    color: var(--gray-mid);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* ---------- شريط الفلترة ---------- */
+.filters-bar {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--gray-border);
+    position: sticky;
+    top: var(--navbar-height);
+    z-index: 50;
+    padding: 16px 0;
+}
+
+.filters-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ---------- فلتر التصنيفات (Chips) ---------- */
+.filter-categories {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    border-radius: 50px;
+    background-color: var(--off-white);
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.filter-chip:hover {
+    background-color: var(--gray-light);
+    color: var(--dark-green);
+    border-color: var(--gray-border);
+}
+
+.filter-chip.active {
+    background-color: var(--dark-green);
+    color: var(--white);
+    border-color: var(--dark-green);
+}
+
+.filter-chip.active:hover {
+    background-color: var(--dark-green-2);
+    color: var(--white);
+}
+
+/* ---------- الترتيب ---------- */
+.sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.sort-label {
+    font-size: 0.9rem;
+    color: var(--gray-mid);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.sort-select {
+    padding: 9px 16px;
+    padding-left: 36px;
+    border: 1px solid var(--gray-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--white);
+    color: var(--black);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A4A4A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    background-size: 14px;
+    min-width: 200px;
+}
+
+.sort-select:hover,
+.sort-select:focus {
+    border-color: var(--dark-green);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(31, 61, 43, 0.08);
+}
+
+/* ---------- شبكة المنتجات ---------- */
+.products-listing {
+    padding: 48px 0 80px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+/* ---------- الحالة الفارغة ---------- */
+.empty-state {
+    text-align: center;
+    padding: 80px 24px;
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--gray-border);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.empty-state h2 {
+    color: var(--black);
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: var(--gray-mid);
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 28px 0 24px;
+    }
+
+    .filters-bar {
+        padding: 12px 0;
+    }
+
+    .filters-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    /* شرائح التصنيفات قابلة للتمرير أفقيًا على الجوال */
+    .filter-categories {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        margin: 0 -24px;
+        padding-right: 24px;
+        padding-left: 24px;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-categories::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .filter-categories::-webkit-scrollbar-thumb {
+        background-color: var(--gray-border);
+        border-radius: 2px;
+    }
+
+    .sort-wrapper {
+        justify-content: space-between;
+    }
+
+    .sort-select {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .products-listing {
+        padding: 32px 0 60px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+
+    .empty-state {
+        padding: 60px 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .products-grid {
+        gap: 10px;
+    }
+}

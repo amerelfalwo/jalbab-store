@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if current_category %}
+        {{ current_category.name }} — جلباب
+    {% else %}
+        جميع المنتجات — جلباب
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product_card.css' %}">
+<link rel="stylesheet" href="{% static 'css/product_list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ============================================
+رأس الصفحة
+============================================ -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb" aria-label="مسار التنقل">
+            <a href="{% url 'store:home' %}">الرئيسية</a>
+            <span class="breadcrumb-sep">/</span>
+            {% if current_category %}
+                <a href="{% url 'store:product_list' %}">المنتجات</a>
+                <span class="breadcrumb-sep">/</span>
+                <span class="breadcrumb-current">{{ current_category.name }}</span>
+            {% else %}
+                <span class="breadcrumb-current">المنتجات</span>
+            {% endif %}
+        </nav>
+
+        <h1 class="page-title">
+            {% if current_category %}
+                {{ current_category.name }}
+            {% else %}
+                جميع المنتجات
+            {% endif %}
+        </h1>
+
+        {% if current_category.description %}
+            <p class="page-description">{{ current_category.description }}</p>
+        {% endif %}
+
+        <p class="page-count">
+            {{ products|length }}
+            {% if products|length == 1 %}منتج{% elif products|length == 2 %}منتجان{% else %}منتجات{% endif %}
+        </p>
+    </div>
+</section>
+
+<!-- ============================================
+     شريط الفلترة + الترتيب
+     ============================================ -->
+<section class="filters-bar">
+    <div class="container filters-container">
+
+        <!-- فلتر التصنيفات -->
+        <div class="filter-categories">
+            <a href="{% url 'store:product_list' %}"
+               class="filter-chip {% if not current_category %}active{% endif %}">
+                الكل
+            </a>
+            {% for cat in categories %}
+                <a href="{{ cat.get_absolute_url }}"
+                   class="filter-chip {% if current_category and current_category.id == cat.id %}active{% endif %}">
+                    {{ cat.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+        <!-- قائمة الترتيب -->
+        <div class="sort-wrapper">
+            <label for="sortSelect" class="sort-label">ترتيب حسب:</label>
+            <select id="sortSelect" class="sort-select" data-base-url="{{ request.path }}">
+                <option value="newest"     {% if current_sort == 'newest' %}selected{% endif %}>الأحدث</option>
+                <option value="price_asc"  {% if current_sort == 'price_asc' %}selected{% endif %}>السعر: من الأقل للأعلى</option>
+                <option value="price_desc" {% if current_sort == 'price_desc' %}selected{% endif %}>السعر: من الأعلى للأقل</option>
+                <option value="name"       {% if current_sort == 'name' %}selected{% endif %}>الاسم (أبجديًا)</option>
+            </select>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============================================
+     شبكة المنتجات
+     ============================================ -->
+<section class="products-listing">
+    <div class="container">
+        {% if products %}
+            <div class="products-grid">
+                {% for product in products %}
+                    {% include 'components/_product_card.html' with product=product %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">🛍️</div>
+                <h2>لا توجد منتجات</h2>
+                <p>
+                    {% if current_category %}
+                        لا توجد منتجات في تصنيف "{{ current_category.name }}" حاليًا.
+                    {% else %}
+                        لم تُضف منتجات بعد.
+                    {% endif %}
+                </p>
+                <a href="{% url 'store:product_list' %}" class="btn btn-primary mt-3">
+                    عرض جميع المنتجات
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_list.js' %}"></script>
+{% endblock %}

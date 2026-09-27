@@ -1,0 +1,347 @@
+/* ============================================================
+   Contact Page — صفحة التواصل
+   ============================================================ */
+
+/* ---------- رأس الصفحة ---------- */
+.contact-header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--gray-border);
+    padding: 32px 0 24px;
+}
+
+.contact-header .breadcrumb { margin-bottom: 12px; }
+
+.contact-header .page-description {
+    color: var(--gray-mid);
+    max-width: 620px;
+    margin-top: 8px;
+    line-height: 1.7;
+}
+
+/* ---------- بطاقات التواصل ---------- */
+.contact-cards-section {
+    padding: 48px 0 8px;
+    background-color: var(--off-white);
+}
+
+.contact-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.contact-card {
+    background-color: var(--white);
+    border: 1px solid var(--gray-border);
+    border-radius: var(--radius-md);
+    padding: 24px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition-base);
+    color: inherit;
+}
+
+.contact-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--gray-mid);
+}
+
+.contact-card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--off-white);
+    color: var(--dark-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    transition: all var(--transition-base);
+}
+
+.contact-card:hover .contact-card-icon {
+    background-color: var(--dark-green);
+    color: var(--white);
+}
+
+.contact-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.contact-card-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--dark-green);
+    word-break: break-word;
+}
+
+.contact-card-note {
+    font-size: 0.82rem;
+    color: var(--gray-mid);
+}
+
+/* ---------- القسم الرئيسي (نموذج + جانبي) ---------- */
+.contact-main-section {
+    padding: 40px 0 80px;
+    background-color: var(--off-white);
+}
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+/* ---------- بطاقة النموذج ---------- */
+.contact-form-card {
+    background-color: var(--white);
+    border: 1px solid var(--gray-border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+}
+
+.contact-form-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 6px;
+}
+
+.contact-form-subtitle {
+    color: var(--gray-mid);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+/* ---------- شبكة النموذج ---------- */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--black);
+}
+
+.required {
+    color: var(--danger);
+    margin-right: 2px;
+}
+
+/* (استخدمنا .form-input من checkout.css — لكن نكرره هنا للأمان) */
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--gray-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--white);
+    font-size: 0.95rem;
+    color: var(--black);
+    font-family: inherit;
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus {
+    border-color: var(--dark-green);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(31, 61, 43, 0.08);
+}
+
+.form-input::placeholder { color: #B5B0A5; }
+
+textarea.form-input {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.7;
+}
+
+/* ---------- الأخطاء ---------- */
+.form-errors {
+    background-color: #FBE7E7;
+    border: 1px solid #F3C8C8;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    color: #7A2020;
+    font-size: 0.9rem;
+}
+
+.field-errors {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.field-errors li {
+    font-size: 0.83rem;
+    color: var(--danger);
+    font-weight: 500;
+}
+
+/* ---------- زر الإرسال ---------- */
+.btn-send-message {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+/* ---------- العمود الجانبي ---------- */
+.contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: calc(var(--navbar-height) + 24px);
+}
+
+.contact-info-card {
+    background-color: var(--white);
+    border: 1px solid var(--gray-border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+}
+
+.contact-info-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 8px;
+}
+
+.contact-info-text {
+    color: var(--gray-mid);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+/* ---------- السوشيال ---------- */
+.social-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--off-white);
+    color: var(--dark-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+}
+
+.social-link:hover {
+    background-color: var(--dark-green);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+/* ---------- ساعات العمل ---------- */
+.contact-hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.contact-hours-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--gray-border);
+    font-size: 0.92rem;
+}
+
+.contact-hours-list li:last-child { border-bottom: none; }
+
+.contact-hours-list span { color: var(--gray-mid); }
+.contact-hours-list strong { color: var(--dark-green); font-weight: 700; }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 1024px) {
+    .contact-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contact-layout {
+        grid-template-columns: 1fr 300px;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-cards-section {
+        padding: 32px 0 8px;
+    }
+
+    .contact-cards-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .contact-card {
+        padding: 20px 14px;
+    }
+
+    .contact-card-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .contact-card-icon svg { width: 22px; height: 22px; }
+
+    .contact-main-section { padding: 32px 0 60px; }
+
+    .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-info-col {
+        position: static;
+    }
+
+    .contact-form-card { padding: 22px; }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 420px) {
+    .contact-cards-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} — جلباب{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product_card.css' %}">
+<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ============================================
+     Breadcrumb
+     ============================================ -->
+<section class="detail-breadcrumb-section">
+    <div class="container">
+        <nav class="breadcrumb" aria-label="مسار التنقل">
+            <a href="{% url 'store:home' %}">الرئيسية</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="{% url 'store:product_list' %}">المنتجات</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-current">{{ product.name }}</span>
+        </nav>
+    </div>
+</section>
+
+<!-- ============================================
+     تفاصيل المنتج
+     ============================================ -->
+<section class="product-detail">
+    <div class="container">
+        <div class="product-detail-grid">
+
+            <!-- ---------- الصورة ---------- -->
+            <div class="product-detail-image-col">
+                <div class="product-detail-image-wrap">
+                    {% if product.image %}
+                        <img
+                            src="{{ product.image.url }}"
+                            alt="{{ product.name }}"
+                            class="product-detail-image"
+                            id="mainProductImage"
+                        >
+                    {% else %}
+                        <img
+                            src="{% static 'images/placeholder.svg' %}"
+                            alt="{{ product.name }}"
+                            class="product-detail-image"
+                        >
+                    {% endif %}
+
+                    {% if product.is_discounted %}
+                        <span class="product-badge product-badge-discount">
+                            خصم {{ product.discount_percentage }}%
+                        </span>
+                    {% endif %}
+
+                    {% if product.is_new %}
+                        <span class="product-badge product-badge-new">جديد</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- ---------- المعلومات ---------- -->
+            <div class="product-detail-info-col">
+
+                <span class="product-detail-category">
+                    <a href="{{ product.category.get_absolute_url }}">
+                        {{ product.category.name }}
+                    </a>
+                </span>
+
+                <h1 class="product-detail-name">{{ product.name }}</h1>
+
+                <!-- السعر -->
+                <div class="product-detail-price">
+                    <span class="price-current">{{ product.price|floatformat:0 }} جنيه</span>
+                    {% if product.is_discounted and product.old_price %}
+                        <span class="price-old">{{ product.old_price|floatformat:0 }} جنيه</span>
+                    {% endif %}
+                </div>
+
+                <hr class="divider">
+
+                <!-- الوصف -->
+                <div class="product-detail-description">
+                    <h2 class="detail-subheading">الوصف</h2>
+                    <p>{{ product.description|linebreaksbr }}</p>
+                </div>
+
+                <!-- حالة المخزون -->
+                <div class="product-detail-stock">
+                    {% if product.is_in_stock %}
+                        <span class="stock-badge stock-available">
+                            ✓ متوفر — {{ product.stock }} قطعة
+                        </span>
+                    {% else %}
+                        <span class="stock-badge stock-out">
+                            ✕ غير متوفر حاليًا
+                        </span>
+                    {% endif %}
+                </div>
+
+                <!-- نموذج الإضافة للسلة -->
+                {% if product.is_in_stock %}
+                <form
+                    action="{% url 'store:cart_add' product.id %}"
+                    method="post"
+                    class="product-detail-form"
+                    id="addToCartForm"
+                >
+                    {% csrf_token %}
+
+                    <div class="quantity-row">
+                        <label for="quantity" class="quantity-label">الكمية:</label>
+                        <div class="quantity-selector">
+                            <button type="button" class="qty-btn" data-action="decrease" aria-label="تقليل">−</button>
+                            <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                value="1"
+                                min="1"
+                                max="{{ product.stock }}"
+                                class="qty-input"
+                            >
+                            <button type="button" class="qty-btn" data-action="increase" aria-label="زيادة">+</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-add-to-cart">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        أضف إلى السلة
+                    </button>
+                </form>
+                {% else %}
+                <div class="product-detail-form">
+                    <button type="button" class="btn btn-primary btn-add-to-cart" disabled>
+                        غير متوفر حاليًا
+                    </button>
+                </div>
+                {% endif %}
+
+                <!-- معلومات إضافية -->
+                <ul class="product-detail-meta">
+                    <li>
+                        <span class="meta-label">التصنيف:</span>
+                        <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
+                    </li>
+                    <li>
+                        <span class="meta-label">تاريخ الإضافة:</span>
+                        <span>{{ product.created_at|date:"d M Y" }}</span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     منتجات مشابهة
+     ============================================ -->
+{% if related_products %}
+<section class="related-products">
+    <div class="container">
+        <h2 class="section-title">قد يعجبك أيضًا</h2>
+        <p class="section-subtitle">منتجات مشابهة من تصنيف {{ product.category.name }}</p>
+
+        <div class="products-grid">
+            {% for p in related_products %}
+                {% include 'components/_product_card.html' with product=p %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_detail.js' %}"></script>
+{% endblock %}

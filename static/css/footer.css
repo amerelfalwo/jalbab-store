@@ -1,0 +1,129 @@
+/* ============================================================
+   Footer — تذييل الصفحة
+   ============================================================ */
+
+   .footer {
+    background-color: var(--dark-green);
+    color: var(--off-white);
+    padding: 60px 0 0;
+    margin-top: 80px;
+}
+
+.footer-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 24px 48px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 40px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+}
+
+.footer-desc {
+    color: rgba(250, 247, 242, 0.75);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.footer-heading {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 4px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 2px;
+    background-color: var(--gold);
+    border-radius: 2px;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-links a {
+    color: rgba(250, 247, 242, 0.8);
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--gold);
+    transform: translateX(-4px);
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(250, 247, 242, 0.8);
+    font-size: 0.95rem;
+}
+
+.footer-contact svg {
+    flex-shrink: 0;
+    color: var(--gold);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(250, 247, 242, 0.12);
+    padding: 20px 24px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: rgba(250, 247, 242, 0.6);
+    font-size: 0.85rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 560px) {
+    .footer {
+        padding-top: 40px;
+        margin-top: 60px;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-bottom: 32px;
+    }
+    .footer-title {
+        font-size: 1.4rem;
+    }
+}
