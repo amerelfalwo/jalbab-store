@@ -1,5 +1,5 @@
 """
-Django settings for jalbab project.
+Django settings for jalbab project — Vercel Ready
 """
 from pathlib import Path
 from decouple import config, Csv
@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # ==========================================
-# الأمان — قراءة من .env
+# الأمان
 # ==========================================
 SECRET_KEY = config(
     'SECRET_KEY',
@@ -24,7 +24,14 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
-    default='127.0.0.1,localhost',
+    default='127.0.0.1,localhost,.vercel.app',
+    cast=Csv()
+)
+
+# Vercel يحتاج هذا
+CSRF_TRUSTED_ORIGINS = config(
+    'CSRF_TRUSTED_ORIGINS',
+    default='https://*.vercel.app',
     cast=Csv()
 )
 
@@ -40,6 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
+    # Cloudinary (لازم يكون قبل store)
+    'cloudinary_storage',
+    'cloudinary',
+
     'store',
 ]
 
@@ -58,7 +70,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# WhiteNoise يُضاف فقط في الإنتاج
 if not DEBUG:
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
@@ -97,6 +108,7 @@ DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
+        conn_health_checks=True,
     )
 }
 
@@ -136,10 +148,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # ==========================================
-# Storages — تختلف بين التطوير والإنتاج
+# Cloudinary (للإنتاج)
+# ==========================================
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME', default=''),
+    'API_KEY': config('CLOUDINARY_API_KEY', default=''),
+    'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
+}
+
+
+# ==========================================
+# Storages
 # ==========================================
 if DEBUG:
-    # في التطوير: خدمة عادية بدون ضغط/Manifest
+    # تطوير: ملفات محلية
     STORAGES = {
         'default': {
             'BACKEND': 'django.core.files.storage.FileSystemStorage',
@@ -149,10 +171,10 @@ if DEBUG:
         },
     }
 else:
-    # في الإنتاج: WhiteNoise مع ضغط + Manifest
+    # إنتاج: Cloudinary للميديا + Whitenoise للـ static
     STORAGES = {
         'default': {
-            'BACKEND': 'django.core.files.storage.FileSystemStorage',
+            'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
         },
         'staticfiles': {
             'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
@@ -176,7 +198,7 @@ MESSAGE_TAGS = {
 
 
 # ==========================================
-# إعدادات الإنتاج (تعمل فقط عند DEBUG=False)
+# إعدادات الإنتاج
 # ==========================================
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
