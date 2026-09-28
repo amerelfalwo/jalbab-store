@@ -47,10 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-
-    # Cloudinary (لازم يكون قبل store)
-    'cloudinary_storage',
-    'cloudinary',
+    'storages',
 
     'store',
 ]
@@ -161,7 +158,6 @@ CLOUDINARY_STORAGE = {
 # Storages
 # ==========================================
 if DEBUG:
-    # تطوير: ملفات محلية
     STORAGES = {
         'default': {
             'BACKEND': 'django.core.files.storage.FileSystemStorage',
@@ -171,10 +167,9 @@ if DEBUG:
         },
     }
 else:
-    # إنتاج: Cloudinary للميديا + Whitenoise للـ static
     STORAGES = {
         'default': {
-            'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
+            'BACKEND': 'storages.backends.cloudinary.CloudinaryStorage',
         },
         'staticfiles': {
             'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
@@ -211,3 +206,4 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
