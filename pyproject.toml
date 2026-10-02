@@ -1,0 +1,15 @@
+[project]
+name = "jalbab-store"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "cloudinary==1.40.0",
+    "dj-database-url==2.1.0",
+    "django==5.0.6",
+    "django-storages==1.14.4",
+    "gunicorn==21.2.0",
+    "pillow==10.3.0",
+    "psycopg2-binary==2.9.9",
+    "python-decouple==3.8",
+    "whitenoise==6.6.0",
+]
